@@ -56,6 +56,34 @@ app.get("/math/rectangle/:width/:height", (req, res) => {
 
 //TODO3
 
+app.get("/math/power/:base/:ex/", (req, res) => {
+  const { base, ex } = req.params;
+  const { root } = req.query;
+
+  // check for required parameters
+  if (!base || !ex) {
+    const missingParams = [];
+    if (!base) {
+      missingParams.push("base");
+    }
+    if (!ex) {
+      missingParams.push("ex");
+    }
+    const errorMessage = `Missing Required GET parameters: ${missingParams.join(
+      ", "
+    )}`;
+    return res.status(400).send(errorMessage);
+  }
+
+  // send greeting
+
+  const message = `potęga:${Math.pow(base, ex)} ${
+    root == "true" ? "root: " + Math.sqrt(base) : ""
+  }`;
+  res.type("text").send(message);
+  res.json(result);
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
