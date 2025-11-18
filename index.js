@@ -5,7 +5,23 @@ const app = express();
 
 // define endpoint for exercise 1 here
 app.get("/math/circle/:r", (req, res) => {
-  //TODO1
+  const { r } = req.query;
+
+  // check for required parameters
+  if (!r) {
+    const missingParams = [];
+    if (!r) {
+      missingParams.push("r");
+    }
+    const errorMessage = `Missing Required GET parameters: ${missingParams.join(
+      ", "
+    )}`;
+    return res.status(400).send(errorMessage);
+  }
+
+  // send greeting
+  const message = `area:${3.1415 * r * r}, circumference ${2 * 3.1415 * r}`;
+  res.type("text").send(message);
   res.json(result);
 });
 
